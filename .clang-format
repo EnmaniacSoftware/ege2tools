@@ -1,0 +1,27 @@
+# Format Style Options - Created with Clang Power Tools
+---
+BasedOnStyle: Microsoft
+ConstructorInitializerIndentWidth : 2
+ContinuationIndentWidth: 2
+IndentWidth: 2
+TabWidth: 2
+ColumnLimit: 160
+IndentCaseLabels: true
+PointerAlignment: Left
+AlwaysBreakTemplateDeclarations: Yes
+EmptyLineBeforeAccessModifier: LogicalBlock
+AlignAfterOpenBracket: Align
+BinPackArguments: false  # FALSE = parameters below each other or in ONE line
+BinPackParameters: false  # FALSE = parameters below each other or in ONE line
+PackConstructorInitializers: Never
+AllowAllParametersOfDeclarationOnNextLine: false
+AlignTrailingComments: true
+AlignConsecutiveMacros: Consecutive
+AllowAllArgumentsOnNextLine: false # together with BinPackArguments
+BreakInheritanceList: AfterComma
+AllowShortCaseLabelsOnASingleLine: true
+BreakBeforeBraces: Custom
+Cpp11BracedListStyle: false
+BraceWrapping: 
+	AfterCaseLabel: true
+AlignConsecutiveAssignments: true

@@ -1,0 +1,19 @@
+#pragma once
+
+#include <QtCore/qglobal.h>
+
+#ifdef COREPLUGIN_EXPORT
+  #define COREPLUGIN_API Q_DECL_EXPORT
+#else
+  #define COREPLUGIN_API Q_DECL_IMPORT
+#endif // COREPLUGIN_EXPORT
+
+#ifdef TEST_PLUGIN
+  #ifdef COREPLUGIN_INTERNAL_EXPORT
+    #define COREPLUGIN_INTERNAL_API Q_DECL_EXPORT
+  #else
+    #define COREPLUGIN_INTERNAL_API Q_DECL_IMPORT
+  #endif // COREPLUGIN_INTERNAL_EXPORT
+#else
+  #define COREPLUGIN_INTERNAL_API
+#endif // TEST_PLUGIN
