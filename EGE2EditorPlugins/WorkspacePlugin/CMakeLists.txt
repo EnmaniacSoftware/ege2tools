@@ -42,14 +42,6 @@ target_link_libraries(${PROJECT_NAME}
 )
 
 # Copy into application
-add_custom_command(TARGET ${PROJECT_NAME}
-    POST_BUILD
-    COMMAND
-    ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/${PROJECT_NAME}.xml ${EDITORAPP_OUTPUT_DIR}
-    COMMENT
-    "Copying artifacts for ${PROJECT_NAME}"
-)
-
 # TAGE - find a way to determine name of the target and use it instead of ${PROJECT_NAME}.dll
 add_custom_command(TARGET ${PROJECT_NAME}
     POST_BUILD

@@ -7,8 +7,6 @@ this file manually, you might introduce QML code that is not supported by Qt Des
 Check out https://doc.qt.io/qtcreator/creator-quick-ui-forms.html for details on .ui.qml files.
 */
 import QtQuick
-import QtQuick.Controls
-import QtGraphs
 
 Rectangle {
     id: rectangle
@@ -21,12 +19,10 @@ Rectangle {
         id: label
         opacity: 0.5
         text: qsTr("No open project")
+        anchors.verticalCenter: parent.verticalCenter
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        anchors.left: rectangle.left
-        anchors.right: rectangle.right
-        anchors.top: rectangle.top
-        anchors.bottom: rectangle.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
 
         font.pointSize: 20
     }

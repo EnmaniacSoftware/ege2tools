@@ -15,7 +15,6 @@ Window {
 
     SystemPalette { id: palette; colorGroup: SystemPalette.Active }
 
-
     MenuBar {
         id: main_window_bar
      //   font.pointSize: 15
@@ -33,26 +32,18 @@ Window {
         }
     }
 
-    ColumnLayout {
-           id: columnLayout
-           width: 0
-           height: 0
-           anchors.left: parent.left
-           anchors.right: parent.right
-           anchors.top: parent.top
-           anchors.bottom: parent.bottom
+    EmptyProject {
+        id: emptyproject
+    }
 
-
-           EmptyProject {
-           id: a
-           }
-
-        StatusBar {
-            id: statusbar
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
-            color: palette.dark
-            fillColor: palette.light
-        }
+    StatusBar {
+        id: statusbar
+        Layout.fillWidth: true
+        Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
+        color: palette.dark
+        fillColor: palette.light
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
     }
 }

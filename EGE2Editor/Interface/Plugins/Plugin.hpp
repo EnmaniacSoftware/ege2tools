@@ -35,7 +35,6 @@ class Plugin
 
 Q_DECLARE_INTERFACE(ege::Plugin, "com.enmaniacsoftware.ege2tools.editor.plugin/1.0")
 
-#define EGE_EXPORT_PLUGIN(pluginClass) \
-  extern "C" Q_DECL_EXPORT QT_PREPEND_NAMESPACE(QObject)* ege_plugin_instance() Q_PLUGIN_INSTANCE(pluginClass)
+#define EGE_EXPORT_PLUGIN(pluginClass) extern "C" Q_DECL_EXPORT QT_PREPEND_NAMESPACE(QObject) * ege_plugin_create_instance() Q_PLUGIN_INSTANCE(pluginClass)
 
-typedef QT_PREPEND_NAMESPACE(QObject)* (*PFPLUGININSTANCE)();
+typedef QT_PREPEND_NAMESPACE(QObject) * (*PFPLUGINCREATEINSTANCE)();

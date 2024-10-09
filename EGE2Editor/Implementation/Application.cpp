@@ -43,7 +43,7 @@ Application::Application(int& argc, char** argv)
   }
 
   // setup plugin location
-  m_pluginManager.setPluginPath(pluginDir);
+  m_pluginManager.setPluginsDirectory(pluginDir);
 
   // load plugins
    m_pluginManager.loadPlugins(m_engine);
