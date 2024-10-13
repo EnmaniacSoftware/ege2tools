@@ -13,6 +13,8 @@ qt_add_library(${PROJECT_NAME} SHARED
     # Private
     Implementation/CorePlugin.cpp
     Implementation/CorePlugin.hpp
+
+
     Implementation/Project/Project.cpp
     Implementation/Project/ProjectFactory.cpp
 
@@ -20,6 +22,7 @@ qt_add_library(${PROJECT_NAME} SHARED
     Interface/CorePlugin_global.h
     Interface/Project/Project.hpp
     Interface/Project/ProjectFactory.hpp
+
 
     # Resources
 #    Resources/resources.qrc
@@ -29,11 +32,11 @@ qt_add_library(${PROJECT_NAME} SHARED
 
 target_include_directories (${PROJECT_NAME}
     PUBLIC
-    Interface
+        Interface
 
     PRIVATE
-    Implementation
-    ${EDITORAPP_INCLUDE_DIR}
+        Implementation
+        ${EDITORAPP_INCLUDE_DIR}
 )
 
 target_compile_definitions (${PROJECT_NAME}

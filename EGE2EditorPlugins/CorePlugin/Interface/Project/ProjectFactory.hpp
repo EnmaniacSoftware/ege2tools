@@ -25,9 +25,8 @@ class COREPLUGIN_API ProjectFactory : public QAbstractItemModel
   Q_OBJECT
 
   public:
-
-    typedef std::function<Project* (QObject*, const QString&, const QString&)> CreateFunction;
-    typedef std::function<QString ()> ProjectTypeNameFunction;
+    using ProjectCreateFunction   = std::function<Project*(QObject*, const QString&, const QString&)>;
+    using ProjectTypeNameFunction = std::function<QString()>;
 
   public:
 
@@ -35,12 +34,21 @@ class COREPLUGIN_API ProjectFactory : public QAbstractItemModel
    ~ProjectFactory() override;
 
   public:
-
     //! Registeres custom project type.
-    bool registerProject(ProjectTypeNameFunction typeNameFunc, CreateFunction createFunc);
+    //! @param typeNameFunc Function that returns type name of the project being registered.
+    //! @param  createFunc Function create function.
+    //! @returns TRUE if project type was registered successfully (e.g. it type name wasnt registered yet). Otherwise, FALSE.
+    bool registerProject(ProjectTypeNameFunction typeNameFunc, ProjectCreateFunction createFunc);
     //! Creates instance of project of the type given by name.
-    Project* createProject(const QString& typeName, const QString& name, const QString& path, QObject* parent) const;
-    //! Returns TRUE if given project type is registered.
+    //! @param parent   Parent object new project instance is to be attached to.
+    //! @param typeName Name of the type of the project to be created.
+    //! @param name     Name of the project.
+    //! @param path     Location where project file is to be created.
+    //! @returns Pointer to newly create project. Otherwise, NULL.
+    Project* createProject(QObject* parent, const QString& typeName, const QString& name, const QString& path) const;
+    //! Check if project type is registered already.
+    //! @param typeName Name of the type of the project.
+    //! @returns TRUE if given project type is registered. Otherwise, FALSE.
     bool isProjectRegistered(const QString& typeName) const;
 
   private:
@@ -62,7 +70,7 @@ class COREPLUGIN_API ProjectFactory : public QAbstractItemModel
     struct ProjectData
     {
       ProjectTypeNameFunction typeNameFunc;
-      CreateFunction          createFunc;
+      ProjectCreateFunction createFunc;
     };
 
     typedef QList<ProjectData> ProjectRegisterList;

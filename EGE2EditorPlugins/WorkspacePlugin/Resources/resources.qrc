@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>EmptyProject.ui.qml</file>
+        <file>NewProject.ui.qml</file>
     </qresource>
 </RCC>

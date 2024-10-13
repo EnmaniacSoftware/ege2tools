@@ -3,6 +3,7 @@
 // #include "ObjectPool.h"
 // #include "Point3.h"
 // #include "Point3F.h"
+#include "Project/Project.hpp"
 #include "Project/ProjectFactory.hpp"
 // #include "Settings.h"
 #include <QDebug>
@@ -29,6 +30,8 @@ void CorePlugin::initialize(QQmlApplicationEngine& engine)
   // }
 
   m_projectFactory = std::make_unique<ProjectFactory>();
+  m_projectFactory->registerProject(Project::TypeName, Project::Create);
+
   // if ( ! ObjectPool::Instance()->addObject(m_projectFactory.get()))
   // {
   //   qCritical() << "Could not add ProjectFactory into pool!";

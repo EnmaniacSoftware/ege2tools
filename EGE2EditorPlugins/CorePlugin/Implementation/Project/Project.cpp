@@ -31,6 +31,16 @@ QString Project::FileFilter()
   return tr("Projects") + QString(" (*." + FileExtension() + ")");
 }
 
+Project* Project::Create(QObject* parent, const QString& name, const QString& path)
+{
+  return new Project(parent, TypeName(), name, path);
+}
+
+QString Project::TypeName()
+{
+  return "Generic";
+}
+
 void Project::setDirty(bool set)
 {
   if (m_dirty != set)

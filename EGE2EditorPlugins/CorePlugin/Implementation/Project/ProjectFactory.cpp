@@ -15,26 +15,19 @@ ProjectFactory::~ProjectFactory()
 {
 }
 
-bool ProjectFactory::registerProject(ProjectTypeNameFunction typeNameFunc, CreateFunction createFunc)
+bool ProjectFactory::registerProject(ProjectTypeNameFunction projectTypeNameFunc, ProjectCreateFunction projectCreateFunc)
 {
-  // check if project with such a name exists already
-  if (isProjectRegistered(typeNameFunc()))
+  if (isProjectRegistered(projectTypeNameFunc()))
   {
-    // error!
     return false;
   }
 
-  // register
-  ProjectData projectData;
-  projectData.typeNameFunc  = typeNameFunc;
-  projectData.createFunc    = createFunc;
-
-  m_registeredProjects.append(projectData);
+  m_registeredProjects.append({ .typeNameFunc = projectTypeNameFunc, .createFunc = projectCreateFunc });
 
   return true;
 }
 
-Project* ProjectFactory::createProject(const QString& typeName, const QString& name, const QString& path, QObject* parent) const
+Project* ProjectFactory::createProject(QObject* parent, const QString& typeName, const QString& name, const QString& path) const
 {
   Project* project = nullptr;
 
@@ -43,7 +36,6 @@ Project* ProjectFactory::createProject(const QString& typeName, const QString& n
   {
     if (projectData.typeNameFunc() == typeName)
     {
-      // create instance
       project = projectData.createFunc(parent, name, path);
       break;
     }
@@ -58,7 +50,6 @@ bool ProjectFactory::isProjectRegistered(const QString& typeName) const
   {
     if (projectData.typeNameFunc() == typeName)
     {
-      // found
       return true;
     }
   }

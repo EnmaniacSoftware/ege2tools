@@ -16,7 +16,8 @@ class ReadStream;
 class WriteStream;
 
 //! @brief
-//! Project base class.
+//! Generic project.
+//! Can be used to create more specialized specialized project types.
 class COREPLUGIN_API Project : public QObject
 // protected Serializable
 //, protected LoadSaveClient
@@ -24,8 +25,9 @@ class COREPLUGIN_API Project : public QObject
   Q_OBJECT
   // Q_INTERFACES(CorePlugin::LoadSaveClient
   //              CorePlugin::Serializable)
-
 public:
+  //! Constructor.
+  Project(QObject* parent, const QString& typeName, const QString& name, const QString& path);
   ~Project() override;
 
 public:
@@ -33,6 +35,15 @@ public:
   static QString FileExtension();
   //! Returns string representing a project file filter.
   static QString FileFilter();
+
+  //! Creates an instance of generic project.
+  //! @param parent Parent object new instance is to be attached to.
+  //! @param name   Name of the project.
+  //! @param path   Location where project file is to be created.
+  //! @returns Pointer to newly create project. Otherwise, NULL.
+  static Project* Create(QObject* parent, const QString& name, const QString& path);
+  //! Returns type name.
+  static QString TypeName();
 
 signals:
 
@@ -55,7 +66,7 @@ public:
   bool isDirty() const;
 
   //! Returns resource library item delegate.
-  virtual QStyledItemDelegate* resourceLibraryItemDelegate() const = 0;
+  // virtual QStyledItemDelegate* resourceLibraryItemDelegate() const = 0;
 
 public slots:
 
@@ -63,9 +74,6 @@ public slots:
   void onProjectDataChanged();
 
 protected:
-  //! Constructor.
-  Project(QObject* parent, const QString& typeName, const QString& name, const QString& path);
-
   //! @see LoadSaveClient::save.
   // bool save(WriteStream& stream) override;
   // //! @see LoadSaveClient::load.

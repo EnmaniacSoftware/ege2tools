@@ -7,23 +7,26 @@ this file manually, you might introduce QML code that is not supported by Qt Des
 Check out https://doc.qt.io/qtcreator/creator-quick-ui-forms.html for details on .ui.qml files.
 */
 import QtQuick
+import QtQuick.Layouts 2.15
+import QtQuick.Controls.Fusion
 
-Rectangle {
-    id: rectangle
-    anchors.left: parent.left
-    anchors.right: parent.right
-    anchors.top: parent.top
-    anchors.bottom: parent.bottom
+Item {
+    id: container
 
     Text {
         id: label
         opacity: 0.5
         text: qsTr("No open project")
-        anchors.verticalCenter: parent.verticalCenter
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        anchors.horizontalCenter: parent.horizontalCenter
 
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: parent.top
+            bottom: parent.bottom
+        }
         font.pointSize: 20
+
+        horizontalAlignment: Qt.AlignHCenter
+        verticalAlignment: Qt.AlignVCenter
     }
 }
