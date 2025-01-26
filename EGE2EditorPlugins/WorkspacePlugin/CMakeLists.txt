@@ -13,6 +13,8 @@ qt_add_library(${PROJECT_NAME} SHARED
     # Private
     Implementation/WorkspacePlugin.cpp
     Implementation/WorkspacePlugin.hpp
+    Implementation/NewProject.hpp
+    Implementation/NewProject.cpp
 
     # Public interface
     Interface/WorkspacePlugin_global.h
@@ -25,11 +27,11 @@ qt_add_library(${PROJECT_NAME} SHARED
 
 target_include_directories (${PROJECT_NAME}
     PUBLIC
-    Interface
+        Interface
 
     PRIVATE
-    Implementation
-    ${EDITORAPP_INCLUDE_DIR}
+        Implementation
+        ${EDITORAPP_INCLUDE_DIR}
 )
 
 target_compile_definitions (${PROJECT_NAME}

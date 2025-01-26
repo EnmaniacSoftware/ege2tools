@@ -5,9 +5,7 @@
 #include <QString>
 #include <QTimer>
 
-namespace ege
-{
-namespace qml
+namespace ege::qml
 {
 
 class StatusBar : public QQuickPaintedItem
@@ -44,5 +42,4 @@ private:
   QTimer m_timer;
 };
 
-} // namespace qml
-} // namespace ege
+} // namespace ege::qml

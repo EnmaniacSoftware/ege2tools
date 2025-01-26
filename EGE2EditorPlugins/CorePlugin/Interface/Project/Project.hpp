@@ -7,6 +7,8 @@
 #include <QObject>
 #include <QString>
 
+#include <memory>
+
 class QStyledItemDelegate;
 
 namespace ege
@@ -27,7 +29,7 @@ class COREPLUGIN_API Project : public QObject
   //              CorePlugin::Serializable)
 public:
   //! Constructor.
-  Project(QObject* parent, const QString& typeName, const QString& name, const QString& path);
+  Project(const QString& typeName, const QString& name, const QString& path);
   ~Project() override;
 
 public:
@@ -41,7 +43,7 @@ public:
   //! @param name   Name of the project.
   //! @param path   Location where project file is to be created.
   //! @returns Pointer to newly create project. Otherwise, NULL.
-  static Project* Create(QObject* parent, const QString& name, const QString& path);
+  static std::unique_ptr<Project> Create(const QString& name, const QString& path);
   //! Returns type name.
   static QString TypeName();
 

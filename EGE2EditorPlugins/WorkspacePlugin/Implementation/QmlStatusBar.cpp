@@ -6,9 +6,7 @@
 #include <QGuiApplication>
 #include <QtLogging>
 
-namespace ege
-{
-namespace qml
+namespace ege::qml
 {
 
 StatusBar::StatusBar(QQuickItem* parent)
@@ -65,5 +63,4 @@ const QString& StatusBar::text() const
   return m_text;
 }
 
-} // namespace qml
-} // namespace ege
+} // namespace ege::qml

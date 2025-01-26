@@ -1,7 +1,8 @@
 <RCC>
-    <qresource prefix="/">
-        <file>main.qml</file>
-        <file>EmptyProject.ui.qml</file>
-        <file>NewProject.ui.qml</file>
+    <qresource prefix="/workspaceplugin">
+        <file>qml/main.qml</file>
+        <file>qml/AppWindow.qml</file>
+        <file>qml/EmptyProject.qml</file>
+        <file>qml/NewProjectDialog.qml</file>
     </qresource>
 </RCC>

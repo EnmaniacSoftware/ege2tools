@@ -1,5 +1,4 @@
 #include "Project/ProjectFactory.hpp"
-#include "Project/Project.hpp"
 
 #include <QDebug>
 
@@ -8,10 +7,6 @@ namespace ege
 
 ProjectFactory::ProjectFactory(QObject* parent)
 : QAbstractItemModel(parent)
-{
-}
-
-ProjectFactory::~ProjectFactory()
 {
 }
 
@@ -27,21 +22,19 @@ bool ProjectFactory::registerProject(ProjectTypeNameFunction projectTypeNameFunc
   return true;
 }
 
-Project* ProjectFactory::createProject(QObject* parent, const QString& typeName, const QString& name, const QString& path) const
+void ProjectFactory::createProject(const QString& typeName, const QString& name, const QUrl& path)
 {
-  Project* project = nullptr;
-
-  // get project create function for a given type name
   foreach (const ProjectData& projectData, m_registeredProjects)
   {
     if (projectData.typeNameFunc() == typeName)
     {
-      project = projectData.createFunc(parent, name, path);
-      break;
+      m_project = std::move(projectData.createFunc(name, path.toLocalFile()));
+      emit projectCreated(m_project.get());
+      return;
     }
   }
 
-  return project;
+  qWarning() << "Could not create project of type" << typeName;
 }
 
 bool ProjectFactory::isProjectRegistered(const QString& typeName) const
@@ -55,6 +48,13 @@ bool ProjectFactory::isProjectRegistered(const QString& typeName) const
   }
   
   return false;
+}
+
+QHash<int, QByteArray> ProjectFactory::roleNames() const
+{
+  QHash<int, QByteArray> roles;
+  roles[ProjectNameRole] = "projectName";
+  return roles;
 }
 
 QModelIndex ProjectFactory::parent(const QModelIndex& index) const
@@ -80,13 +80,12 @@ QVariant ProjectFactory::data(const QModelIndex& index, int role) const
     return QVariant();
   }
 
-  if (Qt::DisplayRole != role)
+  if (role == ProjectNameRole)
   {
-    // done
-    return QVariant();
+    return m_registeredProjects[index.row()].typeNameFunc();
   }
 
-  return m_registeredProjects[index.row()].typeNameFunc();
+  return QVariant();
 }
 
 int ProjectFactory::columnCount(const QModelIndex& parent) const

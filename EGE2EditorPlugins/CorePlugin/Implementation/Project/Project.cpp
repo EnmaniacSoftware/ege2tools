@@ -8,12 +8,12 @@ namespace ege
 
 // static const QString KProjectTag = "Project";
 
-Project::Project(QObject* parent, const QString& typeName, const QString& name, const QString& path)
-: QObject(parent)
-, m_typeName(typeName)
-, m_name(name)
-, m_path(path)
-, m_dirty(false)
+Project::Project(const QString& typeName, const QString& name, const QString& path)
+  : QObject(),
+    m_typeName(typeName),
+    m_name(name),
+    m_path(path),
+    m_dirty(false)
 {
 }
 
@@ -31,9 +31,9 @@ QString Project::FileFilter()
   return tr("Projects") + QString(" (*." + FileExtension() + ")");
 }
 
-Project* Project::Create(QObject* parent, const QString& name, const QString& path)
+std::unique_ptr<Project> Project::Create(const QString& name, const QString& path)
 {
-  return new Project(parent, TypeName(), name, path);
+  return std::make_unique<Project>(TypeName(), name, path);
 }
 
 QString Project::TypeName()

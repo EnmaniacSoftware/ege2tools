@@ -1,4 +1,5 @@
 #include "WorkspacePlugin.hpp"
+#include "NewProject.hpp"
 #include "QmlStatusBar.hpp"
 
 #include <QQmlApplicationEngine>
@@ -10,6 +11,7 @@ WorkspacePlugin::WorkspacePlugin(QObject* parent)
   : QObject(parent)
 {
   qmlRegisterType<qml::StatusBar>("EgeControls", 1, 0, "StatusBar");
+  qmlRegisterType<qml::NewProject>("EgeEditor", 1, 0, "NewProject");
 }
 
 WorkspacePlugin::~WorkspacePlugin()
@@ -18,7 +20,9 @@ WorkspacePlugin::~WorkspacePlugin()
 
 void WorkspacePlugin::initialize(QQmlApplicationEngine& engine)
 {
-  engine.load("qrc:/main.qml");
+  engine.addImportPath("qrc:/");
+
+  engine.load("qrc:/workspaceplugin/qml/main.qml");
 
   // create objects
   // m_mainWindow.reset(new MainWindow());

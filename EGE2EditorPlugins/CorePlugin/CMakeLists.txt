@@ -23,11 +23,8 @@ qt_add_library(${PROJECT_NAME} SHARED
     Interface/Project/Project.hpp
     Interface/Project/ProjectFactory.hpp
 
-
     # Resources
-#    Resources/resources.qrc
- #   Implementation/QmlStatusBar.hpp
-  #  Implementation/QmlStatusBar.cpp
+    Resources/resources.qrc
 )
 
 target_include_directories (${PROJECT_NAME}

@@ -23,6 +23,10 @@ CorePlugin::~CorePlugin()
 
 void CorePlugin::initialize(QQmlApplicationEngine& engine)
 {
+  engine.addImportPath("qrc:/");
+
+  // qmlRegisterType<ProjectFactory>("EgeEditorModels", 1, 0, "ProjectFactory");
+
   // m_loadSaveServer.reset(new LoadSaveServer());
   // if ( ! ObjectPool::Instance()->addObject(m_loadSaveServer.get()))
   // {
@@ -31,6 +35,8 @@ void CorePlugin::initialize(QQmlApplicationEngine& engine)
 
   m_projectFactory = std::make_unique<ProjectFactory>();
   m_projectFactory->registerProject(Project::TypeName, Project::Create);
+
+  engine.rootContext()->setContextProperty("projectFactoryModel", m_projectFactory.get());
 
   // if ( ! ObjectPool::Instance()->addObject(m_projectFactory.get()))
   // {

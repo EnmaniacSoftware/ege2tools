@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/coreplugin">
+        <file>qml/js/Url-utilities.js</file>
+        <file>qml/js/FileSystem-utilities.js</file>
+    </qresource>
+</RCC>

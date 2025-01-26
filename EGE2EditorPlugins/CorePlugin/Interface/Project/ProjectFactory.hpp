@@ -1,19 +1,24 @@
 #pragma once
 
 #include "CorePlugin_global.h"
+#include "Project.hpp"
+
 #include <QAbstractItemModel>
+#include <QHash>
 #include <QMap>
 #include <QModelIndex>
+#include <QString>
+#include <QUrl>
+#include <QVariant>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
-#include <QString>
-#include <QVariant>
+#include <QtQml>
+
 #include <functional>
+#include <memory>
 
 namespace ege
 {
-
-class Project;
 
 //! @brief
 //! Project factory object.
@@ -23,62 +28,74 @@ class Project;
 class COREPLUGIN_API ProjectFactory : public QAbstractItemModel
 {
   Q_OBJECT
+  QML_ELEMENT
 
-  public:
-    using ProjectCreateFunction   = std::function<Project*(QObject*, const QString&, const QString&)>;
-    using ProjectTypeNameFunction = std::function<QString()>;
+  enum Roles
+  {
+    ProjectNameRole = Qt::UserRole + 1
+  };
 
-  public:
+public:
+  using ProjectCreateFunction   = std::function<std::unique_ptr<Project>(const QString&, const QString&)>;
+  using ProjectTypeNameFunction = std::function<QString()>;
 
-    explicit ProjectFactory(QObject* parent = nullptr);
-   ~ProjectFactory() override;
+public:
+  explicit ProjectFactory(QObject* parent = nullptr);
 
-  public:
-    //! Registeres custom project type.
-    //! @param typeNameFunc Function that returns type name of the project being registered.
-    //! @param  createFunc Function create function.
-    //! @returns TRUE if project type was registered successfully (e.g. it type name wasnt registered yet). Otherwise, FALSE.
-    bool registerProject(ProjectTypeNameFunction typeNameFunc, ProjectCreateFunction createFunc);
-    //! Creates instance of project of the type given by name.
-    //! @param parent   Parent object new project instance is to be attached to.
-    //! @param typeName Name of the type of the project to be created.
-    //! @param name     Name of the project.
-    //! @param path     Location where project file is to be created.
-    //! @returns Pointer to newly create project. Otherwise, NULL.
-    Project* createProject(QObject* parent, const QString& typeName, const QString& name, const QString& path) const;
-    //! Check if project type is registered already.
-    //! @param typeName Name of the type of the project.
-    //! @returns TRUE if given project type is registered. Otherwise, FALSE.
-    bool isProjectRegistered(const QString& typeName) const;
+signals:
+  //! Signal emitted when project is created.
+  //! @param project  Newly created project.
+  void projectCreated(Project* project) const;
 
-  private:
+public:
+  //! Registers custom project type.
+  //! @param typeNameFunc Function that returns type name of the project being registered.
+  //! @param  createFunc Function create function.
+  //! @returns TRUE if project type was registered successfully (e.g. it type name wasnt registered yet). Otherwise, FALSE.
+  bool registerProject(ProjectTypeNameFunction typeNameFunc, ProjectCreateFunction createFunc);
 
-    //! @see QAbstractItemModel::parent.
-    QModelIndex parent(const QModelIndex &index) const override;
-    //! @see QAbstractItemModel::index.
-    QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
-    //! @see QAbstractItemModel::data.
-    QVariant data(const QModelIndex &index, int role) const override;
-    //! @see QAbstractItemModel::columnCount.
-    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
-    //! @see QAbstractItemModel::rowCount.
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+  //! Creates instance of project of the type given by name.
+  //! @param typeName Name of the type of the project to be created.
+  //! @param name     Name of the project.
+  //! @param url      Location where project is to be created.
+  //! @note On successful project creation, @ref projectCreated is emitted.
+  Q_INVOKABLE void createProject(const QString& typeName, const QString& name, const QUrl& url);
 
-  private:
+  //! Check if project type is registered already.
+  //! @param typeName Name of the type of the project.
+  //! @returns TRUE if given project type is registered. Otherwise, FALSE.
+  bool isProjectRegistered(const QString& typeName) const;
 
-    //! Data struct of registered project.
-    struct ProjectData
-    {
-      ProjectTypeNameFunction typeNameFunc;
-      ProjectCreateFunction createFunc;
-    };
+protected:
+  QHash<int, QByteArray> roleNames() const override;
 
-    typedef QList<ProjectData> ProjectRegisterList;
+private:
+  //! @see QAbstractItemModel::parent.
+  QModelIndex parent(const QModelIndex& index) const override;
+  //! @see QAbstractItemModel::index.
+  QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
+  //! @see QAbstractItemModel::data.
+  QVariant data(const QModelIndex& index, int role) const override;
+  //! @see QAbstractItemModel::columnCount.
+  int columnCount(const QModelIndex& parent = QModelIndex()) const override;
+  //! @see QAbstractItemModel::rowCount.
+  int rowCount(const QModelIndex& parent = QModelIndex()) const override;
 
-  private:
+private:
+  //! Data struct of registered project.
+  struct ProjectData
+  {
+    ProjectTypeNameFunction typeNameFunc;
+    ProjectCreateFunction createFunc;
+  };
 
-    //! List of registered projects.
-    ProjectRegisterList m_registeredProjects;
+  typedef QList<ProjectData> ProjectRegisterList;
+
+private:
+  //! List of registered projects.
+  ProjectRegisterList m_registeredProjects;
+  //! Created project.
+  std::unique_ptr<Project> m_project;
 };
 
 } // namespace ege
