@@ -20,12 +20,12 @@ signals:
 public:
   explicit StatusBar(QQuickItem* parent = nullptr);
 
-  Q_INVOKABLE void showMessage(const QString& message, int timeout = 0);
-
-  void paint(QPainter* painter) override;
+  Q_INVOKABLE
+  void showMessage(const QString& message, int timeout = 0);
 
   //! Sets text color.
-  Q_INVOKABLE void setColor(const QColor& color);
+  Q_INVOKABLE
+  void setColor(const QColor& color);
   //! Returns text color.
   const QColor& color() const;
 
@@ -34,6 +34,8 @@ private slots:
 
 private:
   const QString& text() const;
+
+  void paint(QPainter* painter) override;
 
 private:
   QString m_text;

@@ -40,6 +40,9 @@ void StatusBar::paint(QPainter* painter)
   painter->drawRect(boundingRect());
 
   painter->setPen({ color() });
+  painter->drawLine(boundingRect().topLeft(), boundingRect().topRight());
+
+  painter->setPen({ color() });
   painter->drawText(boundingRect(), Qt::AlignLeft | Qt::AlignVCenter, text());
 }
 

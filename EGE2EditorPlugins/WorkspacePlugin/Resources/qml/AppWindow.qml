@@ -59,7 +59,7 @@ Rectangle {
         id: statusbar
 
         color: palette.dark
-        fillColor: palette.light
+        fillColor: palette.window
         height: 20
 
         anchors {
