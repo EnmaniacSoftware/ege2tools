@@ -1,17 +1,17 @@
 #include "WorkspacePlugin.hpp"
-#include "NewProject.hpp"
 #include "QmlStatusBar.hpp"
 
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 
 namespace ege
 {
 
 WorkspacePlugin::WorkspacePlugin(QObject* parent)
-  : QObject(parent)
+  : QObject(parent),
+    m_mainWindow(std::make_unique<MainWindow>(this))
 {
   qmlRegisterType<qml::StatusBar>("EgeControls", 1, 0, "StatusBar");
-  qmlRegisterType<qml::NewProject>("EgeEditor", 1, 0, "NewProject");
 }
 
 WorkspacePlugin::~WorkspacePlugin()
@@ -22,10 +22,8 @@ void WorkspacePlugin::initialize(QQmlApplicationEngine& engine)
 {
   engine.addImportPath("qrc:/");
 
-  engine.load("qrc:/workspaceplugin/qml/main.qml");
-
-  // create objects
-  // m_mainWindow.reset(new MainWindow());
+  // expose plugin as main window
+  engine.rootContext()->setContextProperty("native_mainWindow", m_mainWindow.get());
 
   // m_configuration.reset(new ConfigurationDefault(*qobject_cast<StatusBar*>(m_mainWindow.get())));
   // if ( ! ObjectPool::Instance()->addObject(*m_configuration))
@@ -35,8 +33,8 @@ void WorkspacePlugin::initialize(QQmlApplicationEngine& engine)
 
   // m_propertiesWindow.reset(new PropertiesWindowImpl(m_mainWindow.get()));
 
-  // // show main window
-  // m_mainWindow->show();
+  // load main view
+  engine.load("qrc:/workspaceplugin/qml/main.qml");
 }
 
 void WorkspacePlugin::deinitialize()

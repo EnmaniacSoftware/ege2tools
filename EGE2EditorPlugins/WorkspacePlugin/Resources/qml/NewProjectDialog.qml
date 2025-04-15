@@ -6,8 +6,6 @@ import QtQuick.Dialogs
 import "qrc:coreplugin/qml/js/Url-utilities.js" as UrlUtils
 import "qrc:coreplugin/qml/js/FileSystem-utilities.js" as FSUtils
 
-import EgeControls 1.0
-
 Dialog {
     title: qsTr("New project")
     modal: true
@@ -22,9 +20,9 @@ Dialog {
     anchors.centerIn: parent
 
     onAccepted: {
-        projectFactoryModel.createProject(project_type_listview.currentItem.projectName,
-                                          project_name_textfield.text,
-                                          dialog_browseLocation.selectedFolder)
+        native_projectFactory.createProject(project_type_listview.currentItem.projectName,
+                                            project_name_textfield.text,
+                                            dialog_browseLocation.selectedFolder)
     }
 
     onRejected: console.log("Cancel clicked")
@@ -55,7 +53,7 @@ Dialog {
             Layout.fillWidth: true
             height: 200
             required model
-            model: projectFactoryModel
+            model: native_projectFactory
 
             delegate: ItemDelegate {
                 required property string projectName
@@ -111,10 +109,6 @@ Dialog {
 
     Connections {
         target: project_type_listview
-
-        function onCurrentItemChanged() {
-            console.log("list item chaned:", project_type_listview.currentItem.projectName)
-        }
     }
 
     Connections {

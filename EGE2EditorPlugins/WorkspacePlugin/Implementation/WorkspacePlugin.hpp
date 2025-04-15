@@ -2,11 +2,14 @@
 
 #include "WorkspacePlugin_global.h"
 
+#include "MainWindow.hpp"
+
 #include <Plugins/Plugin.hpp>
+
+#include <memory>
 
 namespace ege
 {
-
 //! @brief
 //! Workspace plugin acts as entry point to graphical user interface.
 //! It offers main application window support which can be used by another plugins to place their UI on.
@@ -33,7 +36,7 @@ private:
 
 private:
   //! Main window.
-//  std::unique_ptr<MainWindow> m_mainWindow;
+  std::unique_ptr<MainWindow> m_mainWindow;
 };
 
 } // namespace ege

@@ -1,5 +1,7 @@
 #include "Project/ProjectFactory.hpp"
 
+#include <ObjectPool.hpp>
+
 #include <QDebug>
 
 namespace ege
@@ -30,6 +32,10 @@ void ProjectFactory::createProject(const QString& typeName, const QString& name,
     {
       m_project = std::move(projectData.createFunc(name, path.toLocalFile()));
       emit projectCreated(m_project.get());
+
+      ObjectPool::Instance()->addObject(m_project.get());
+
+      m_project->setDirty(true);
       return;
     }
   }

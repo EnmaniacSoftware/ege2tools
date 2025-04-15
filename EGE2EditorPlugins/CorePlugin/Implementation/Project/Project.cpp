@@ -46,7 +46,6 @@ void Project::setDirty(bool set)
   if (m_dirty != set)
   {
     m_dirty = set;
-
     emit dirtyFlagChanged();
   }
 }

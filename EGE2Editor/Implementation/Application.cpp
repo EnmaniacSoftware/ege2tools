@@ -28,10 +28,11 @@ Application::Application(int& argc, char** argv)
     Qt::QueuedConnection);
 
   // process commandline
+  QCommandLineOption pluginDirOption(KPluginsDirectoryOption, QCoreApplication::tr("Directory containing plugins (xml and dynamic libraries)."), "directory");
+
   QCommandLineParser parser;
   parser.addHelpOption();
   parser.addVersionOption();
-  QCommandLineOption pluginDirOption(KPluginsDirectoryOption, QCoreApplication::tr("Directory containing plugins (xml and dynamic libraries)."), "directory");
   parser.addOption(pluginDirOption);
   parser.process(*this);
 

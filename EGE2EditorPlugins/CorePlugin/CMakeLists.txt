@@ -14,12 +14,16 @@ qt_add_library(${PROJECT_NAME} SHARED
     Implementation/CorePlugin.cpp
     Implementation/CorePlugin.hpp
 
+    Implementation/ObjectPool.cpp
 
     Implementation/Project/Project.cpp
     Implementation/Project/ProjectFactory.cpp
 
     # Public interface
     Interface/CorePlugin_global.h
+
+    Interface/ObjectPool.hpp
+
     Interface/Project/Project.hpp
     Interface/Project/ProjectFactory.hpp
 

@@ -7,12 +7,12 @@
 #include <QHash>
 #include <QMap>
 #include <QModelIndex>
+#include <QQmlEngine>
 #include <QString>
 #include <QUrl>
 #include <QVariant>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
-#include <QtQml>
 
 #include <functional>
 #include <memory>
@@ -45,7 +45,7 @@ public:
 signals:
   //! Signal emitted when project is created.
   //! @param project  Newly created project.
-  void projectCreated(Project* project) const;
+  void projectCreated(ege::Project* project);
 
 public:
   //! Registers custom project type.

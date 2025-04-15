@@ -8,6 +8,7 @@
 // #include "Settings.h"
 #include <QDebug>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 
 namespace ege
 {
@@ -36,7 +37,7 @@ void CorePlugin::initialize(QQmlApplicationEngine& engine)
   m_projectFactory = std::make_unique<ProjectFactory>();
   m_projectFactory->registerProject(Project::TypeName, Project::Create);
 
-  engine.rootContext()->setContextProperty("projectFactoryModel", m_projectFactory.get());
+  engine.rootContext()->setContextProperty("native_projectFactory", m_projectFactory.get());
 
   // if ( ! ObjectPool::Instance()->addObject(m_projectFactory.get()))
   // {

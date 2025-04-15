@@ -19,7 +19,7 @@ class WriteStream;
 
 //! @brief
 //! Generic project.
-//! Can be used to create more specialized specialized project types.
+//! Can be used to create more specialized specialized project types or used standalone.
 class COREPLUGIN_API Project : public QObject
 // protected Serializable
 //, protected LoadSaveClient

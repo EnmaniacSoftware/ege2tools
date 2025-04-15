@@ -4,5 +4,10 @@
         <file>qml/AppWindow.qml</file>
         <file>qml/EmptyProject.qml</file>
         <file>qml/NewProjectDialog.qml</file>
+        <file>qml/MyMessageBox.qml</file>
+        <file>icons/message-box-icon-error.png</file>
+        <file>icons/message-box-icon-info.png</file>
+        <file>icons/message-box-icon-question.png</file>
+        <file>icons/message-box-icon-warning.png</file>
     </qresource>
 </RCC>

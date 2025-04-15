@@ -11,16 +11,18 @@ qt_standard_project_setup(REQUIRES 6.5)
 
 qt_add_library(${PROJECT_NAME} SHARED
     # Private
+    Implementation/MainWindow.cpp
+    Implementation/MainWindow.hpp
     Implementation/WorkspacePlugin.cpp
     Implementation/WorkspacePlugin.hpp
-    Implementation/NewProject.hpp
-    Implementation/NewProject.cpp
 
     # Public interface
     Interface/WorkspacePlugin_global.h
 
     # Resources
     Resources/resources.qrc
+
+    # Controls - TAGE move out ?
     Implementation/QmlStatusBar.hpp
     Implementation/QmlStatusBar.cpp
 )
@@ -40,7 +42,9 @@ target_compile_definitions (${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME}
-    PRIVATE Qt6::Quick
+   PRIVATE
+   Qt6::Quick
+   CorePlugin
 )
 
 # Copy into application
